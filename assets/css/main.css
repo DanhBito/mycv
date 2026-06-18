@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 240 244 248;
+    --color-bg-secondary: 226 232 240;
+    --color-bg-tertiary: 218 226 235;
+    --color-text-primary: 26 32 44;
+    --color-muted: 74 85 104;
+    --color-border: 176 190 208;
+    --color-spring: 58 128 30;
+    --color-cyan: 2 117 255;
+  }
+
+  .dark {
+    --color-bg: 13 17 23;
+    --color-bg-secondary: 22 27 34;
+    --color-bg-tertiary: 33 38 45;
+    --color-text-primary: 230 237 243;
+    --color-muted: 139 148 158;
+    --color-border: 48 54 61;
+    --color-spring: 109 179 63;
+    --color-cyan: 0 212 255;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-text-primary overflow-x-hidden;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-property: color, background-color, border-color, box-shadow;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--color-bg));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-border));
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  .tag {
+    @apply text-xs px-2.5 py-0.5 rounded font-mono font-medium;
+  }
+  .tag-green {
+    background: rgba(58, 128, 30, 0.12);
+    color: #2d6b15;
+    border: 1px solid rgba(58, 128, 30, 0.3);
+  }
+  .tag-cyan {
+    background: rgba(2, 117, 255, 0.08);
+    color: #0260d0;
+    border: 1px solid rgba(2, 117, 255, 0.25);
+  }
+  .tag-orange {
+    background: rgba(180, 100, 20, 0.1);
+    color: #a05a10;
+    border: 1px solid rgba(180, 100, 20, 0.25);
+  }
+  .tag-purple {
+    background: rgba(120, 60, 200, 0.1);
+    color: #6d28d9;
+    border: 1px solid rgba(120, 60, 200, 0.25);
+  }
+  .dark .tag-green {
+    background: rgba(109, 179, 63, 0.12);
+    color: #6DB33F;
+    border: 1px solid rgba(109, 179, 63, 0.3);
+  }
+  .dark .tag-cyan {
+    background: rgba(0, 212, 255, 0.1);
+    color: #00d4ff;
+    border: 1px solid rgba(0, 212, 255, 0.25);
+  }
+  .dark .tag-orange {
+    background: rgba(255, 160, 60, 0.1);
+    color: #ffa03c;
+    border: 1px solid rgba(255, 160, 60, 0.25);
+  }
+  .dark .tag-purple {
+    background: rgba(180, 130, 255, 0.1);
+    color: #b482ff;
+    border: 1px solid rgba(180, 130, 255, 0.25);
+  }
+
+  .text-terminal-string {
+    color: #0260d0;
+  }
+  .dark .text-terminal-string {
+    color: #a5d6ff;
+  }
+  .text-terminal-accent {
+    color: #b45309;
+  }
+  .dark .text-terminal-accent {
+    color: #e3b341;
+  }
+
+  .admin-input {
+    @apply bg-bg-tertiary border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:border-cyan focus:outline-none;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, rgb(var(--color-spring)), rgb(var(--color-cyan)));
+  }
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(5px); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease both;
+}
+.animate-fade-up-1 { animation-delay: 0.1s; }
+.animate-fade-up-2 { animation-delay: 0.2s; }
+.animate-fade-up-3 { animation-delay: 0.3s; }
+.animate-fade-up-4 { animation-delay: 0.4s; }
+.animate-fade-up-5 { animation-delay: 0.5s; }
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+.animate-scroll-bounce {
+  animation: scrollBounce 1.5s ease-in-out infinite;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}

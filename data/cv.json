@@ -1,0 +1,583 @@
+{
+  "seo": {
+    "title": "Duong Duy Danh — Backend Software Engineer",
+    "description": "Backend Software Engineer with 4+ years across Java Spring Boot & PHP Laravel/Phalcon. Specialized in microservices, distributed systems, and API design.",
+    "author": "Duong Duy Danh",
+    "ogTitle": "Duong Duy Danh — Backend Software Engineer",
+    "ogDescription": "Backend Engineer specialized in Java Spring Boot & PHP Laravel. 4+ years building scalable systems for e-government platforms."
+  },
+  "nav": {
+    "brandName": "DuyDanh",
+    "links": [
+      {
+        "href": "#skills",
+        "label": "Skills"
+      },
+      {
+        "href": "#experience",
+        "label": "Experience"
+      },
+      {
+        "href": "#metrics",
+        "label": "Impact"
+      },
+      {
+        "href": "#education",
+        "label": "Education"
+      },
+      {
+        "href": "#contact",
+        "label": "Contact"
+      }
+    ]
+  },
+  "hero": {
+    "statusBadge": "⚡ Open to work — Java & PHP Backend",
+    "name": "Duong Duy Danh",
+    "highlightedPart": "Danh",
+    "typewriterLines": [
+      "Backend Software Engineer",
+      "Java Spring Boot · PHP Laravel",
+      "Microservices & Distributed Systems",
+      "API Architect & System Designer"
+    ],
+    "stats": [
+      {
+        "target": 4,
+        "suffix": "+",
+        "label": "Years Experience"
+      },
+      {
+        "target": 2,
+        "suffix": "",
+        "label": "Backend Stacks"
+      },
+      {
+        "target": 1,
+        "suffix": "M+",
+        "label": "Transactions / year"
+      },
+      {
+        "target": 10,
+        "suffix": "+",
+        "label": "Integrations Built"
+      }
+    ]
+  },
+  "skills": {
+    "description": "4+ years building scalable backend systems across Java Spring Boot & PHP (Laravel / Phalcon) — from microservices and event streaming to API design and third-party integrations.",
+    "groups": [
+      {
+        "icon": "🍃",
+        "title": "Java Ecosystem",
+        "skills": [
+          {
+            "name": "Spring Boot",
+            "color": "green"
+          },
+          {
+            "name": "Spring MVC",
+            "color": "green"
+          },
+          {
+            "name": "Spring Data",
+            "color": "green"
+          },
+          {
+            "name": "Spring Cloud",
+            "color": "green"
+          },
+          {
+            "name": "Maven",
+            "color": "green"
+          }
+        ]
+      },
+      {
+        "icon": "🐘",
+        "title": "PHP Ecosystem",
+        "skills": [
+          {
+            "name": "Laravel",
+            "color": "purple"
+          },
+          {
+            "name": "Phalcon",
+            "color": "purple"
+          },
+          {
+            "name": "Blade / Volt",
+            "color": "purple"
+          },
+          {
+            "name": "Eloquent ORM",
+            "color": "purple"
+          }
+        ]
+      },
+      {
+        "icon": "🔗",
+        "title": "API & Integration",
+        "skills": [
+          {
+            "name": "RESTful APIs",
+            "color": "cyan"
+          },
+          {
+            "name": "Webhooks",
+            "color": "cyan"
+          },
+          {
+            "name": "OpenAPI",
+            "color": "cyan"
+          },
+          {
+            "name": "Third-party APIs",
+            "color": "cyan"
+          }
+        ]
+      },
+      {
+        "icon": "🗄️",
+        "title": "Databases",
+        "skills": [
+          {
+            "name": "Oracle SQL",
+            "color": "cyan"
+          },
+          {
+            "name": "MySQL",
+            "color": "cyan"
+          },
+          {
+            "name": "MongoDB",
+            "color": "cyan"
+          },
+          {
+            "name": "Elasticsearch",
+            "color": "cyan"
+          }
+        ]
+      },
+      {
+        "icon": "⚡",
+        "title": "Message Queue & Streaming",
+        "skills": [
+          {
+            "name": "Kafka",
+            "color": "orange"
+          },
+          {
+            "name": "Kafka Cloud",
+            "color": "orange"
+          },
+          {
+            "name": "Event-driven arch",
+            "color": "orange"
+          }
+        ]
+      },
+      {
+        "icon": "🏗️",
+        "title": "Architecture & Design",
+        "skills": [
+          {
+            "name": "Microservices",
+            "color": "purple"
+          },
+          {
+            "name": "Distributed Systems",
+            "color": "purple"
+          },
+          {
+            "name": "Plugin Architecture",
+            "color": "purple"
+          }
+        ]
+      },
+      {
+        "icon": "🖥️",
+        "title": "Frontend",
+        "skills": [
+          {
+            "name": "Angular",
+            "color": "orange"
+          },
+          {
+            "name": "NuxtJS",
+            "color": "orange"
+          },
+          {
+            "name": "JavaScript",
+            "color": "orange"
+          },
+          {
+            "name": "jQuery",
+            "color": "orange"
+          },
+          {
+            "name": "Bootstrap",
+            "color": "orange"
+          }
+        ]
+      },
+      {
+        "icon": "🛠️",
+        "title": "DevOps & Tools",
+        "skills": [
+          {
+            "name": "Docker",
+            "color": "green"
+          },
+          {
+            "name": "Git",
+            "color": "green"
+          },
+          {
+            "name": "Cloudflare",
+            "color": "green"
+          },
+          {
+            "name": "PM2",
+            "color": "green"
+          },
+          {
+            "name": "Postman",
+            "color": "green"
+          }
+        ]
+      }
+    ]
+  },
+  "experience": [
+    {
+      "company": "VNPT",
+      "role": "Full-Stack Backend Developer",
+      "period": "May 2023 → September 2025",
+      "companyColor": "",
+      "dotColor": "",
+      "projects": [
+        {
+          "name": "1022 Citizen Feedback Portal",
+          "period": "Oct 2024 – Sep 2025",
+          "borderColor": "",
+          "bullets": [
+            "Microservice architecture with dossier workflows, state machines & permission-based access control",
+            "Built clean RESTful API contracts; collaborated on API specs with frontend team",
+            "Kafka-based event streaming for distributed notification delivery with eventual consistency",
+            "Elasticsearch indexing on <span class=\"text-cyan font-semibold\">1M+ dossier records</span>",
+            "Code reviews & mentoring — reduced production bugs by <span class=\"text-cyan font-semibold\">30%</span>"
+          ],
+          "tags": [
+            {
+              "name": "Spring Boot",
+              "color": "green"
+            },
+            {
+              "name": "Spring Data",
+              "color": "green"
+            },
+            {
+              "name": "Kafka",
+              "color": "orange"
+            },
+            {
+              "name": "Elasticsearch",
+              "color": "cyan"
+            },
+            {
+              "name": "Oracle SQL",
+              "color": "cyan"
+            },
+            {
+              "name": "MongoDB",
+              "color": "cyan"
+            },
+            {
+              "name": "Angular",
+              "color": "orange"
+            }
+          ]
+        },
+        {
+          "name": "iGate — Public Services Gateway",
+          "period": "Jul 2023 – Sep 2025",
+          "borderColor": "cyan",
+          "bullets": [
+            "Nation-wide e-government platform with Kafka Cloud inter-service communication",
+            "Developed complex workflow engines for dossier handling, task routing & permission systems",
+            "Built APIs with webhooks for external partners; integrated payment & notification services",
+            "Search latency reduced by <span class=\"text-cyan font-semibold\">60%</span> via Elasticsearch indexing optimization",
+            "API response time improved by <span class=\"text-cyan font-semibold\">45%</span> through query & database index optimization"
+          ],
+          "tags": [
+            {
+              "name": "Spring Boot",
+              "color": "green"
+            },
+            {
+              "name": "Kafka Cloud",
+              "color": "orange"
+            },
+            {
+              "name": "Elasticsearch",
+              "color": "cyan"
+            },
+            {
+              "name": "MongoDB",
+              "color": "cyan"
+            },
+            {
+              "name": "Oracle SQL",
+              "color": "cyan"
+            },
+            {
+              "name": "Angular",
+              "color": "orange"
+            }
+          ]
+        },
+        {
+          "name": "Hospital Information System (HIS)",
+          "period": "May 2024 – Jul 2024",
+          "borderColor": "muted",
+          "bullets": [
+            "Clinical workflow optimization & Oracle SQL performance tuning for patient data retrieval",
+            "JasperReports integration for dynamic medical report generation with complex data aggregation"
+          ],
+          "tags": [
+            {
+              "name": "Java",
+              "color": "green"
+            },
+            {
+              "name": "Oracle SQL",
+              "color": "cyan"
+            },
+            {
+              "name": "JasperReports",
+              "color": "orange"
+            },
+            {
+              "name": "Angular",
+              "color": "orange"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "BIN Corporation Group",
+      "role": "PHP Developer",
+      "period": "Sep 2022 → Mar 2023",
+      "companyColor": "",
+      "dotColor": "",
+      "projects": [
+        {
+          "name": "",
+          "period": "",
+          "borderColor": "",
+          "bullets": [
+            "Built RESTful APIs & webhooks for payment processing, notifications & external data sync across <span class=\"text-cyan font-semibold\">3+ platforms</span>",
+            "Created reusable modular plugins & backend components for scalability",
+            "Designed MySQL schemas supporting multi-site content & complex business rules"
+          ],
+          "tags": [
+            {
+              "name": "Phalcon",
+              "color": "purple"
+            },
+            {
+              "name": "MySQL",
+              "color": "cyan"
+            },
+            {
+              "name": "JavaScript",
+              "color": "orange"
+            },
+            {
+              "name": "jQuery",
+              "color": "orange"
+            },
+            {
+              "name": "Bootstrap",
+              "color": "orange"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "SweetSoft Solutions",
+      "role": "PHP Developer",
+      "period": "Mar 2021 → Jun 2022",
+      "companyColor": "",
+      "dotColor": "",
+      "projects": [
+        {
+          "name": "",
+          "period": "",
+          "borderColor": "",
+          "bullets": [
+            "Designed custom plugins extending website functionality with maintainability & scalability",
+            "Tailored UI & database layouts to client-specific requirements",
+            "Architected MySQL schemas with data normalization & optimization",
+            "Agile delivery — high-quality code within tight deadlines"
+          ],
+          "tags": [
+            {
+              "name": "Laravel",
+              "color": "purple"
+            },
+            {
+              "name": "MySQL",
+              "color": "cyan"
+            },
+            {
+              "name": "JavaScript",
+              "color": "orange"
+            },
+            {
+              "name": "jQuery",
+              "color": "orange"
+            },
+            {
+              "name": "Bootstrap",
+              "color": "orange"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Freelance",
+      "role": "Cloudflare & Frontend Developer",
+      "period": "Oct 2025 → Present",
+      "companyColor": "green",
+      "dotColor": "cyan",
+      "projects": [
+        {
+          "name": "",
+          "period": "",
+          "borderColor": "cyan",
+          "bullets": [
+            "Deploy & optimize NuxtJS apps on Cloudflare; configure SSL, cache rules, WAF & rate limiting",
+            "Performance-first development with SEO optimization & high-performance edge logic"
+          ],
+          "tags": [
+            {
+              "name": "NuxtJS",
+              "color": "orange"
+            },
+            {
+              "name": "Cloudflare",
+              "color": "green"
+            },
+            {
+              "name": "MySQL",
+              "color": "cyan"
+            },
+            {
+              "name": "PM2",
+              "color": "green"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "value": "4+",
+      "label": "Years across Java Spring Boot & PHP Laravel / Phalcon"
+    },
+    {
+      "value": "1M+",
+      "label": "Transactions processed annually on e-gov platform"
+    },
+    {
+      "value": "10+",
+      "label": "Third-party services integrated (payment, notification, CRM)"
+    },
+    {
+      "value": "60%",
+      "label": "Reduction in search latency via Elasticsearch tuning"
+    },
+    {
+      "value": "45%",
+      "label": "API response time improvement through query optimization"
+    },
+    {
+      "value": "30%",
+      "label": "Fewer production bugs after mentoring & code reviews"
+    }
+  ],
+  "education": {
+    "school": "Telecommunications University",
+    "degree": "Bachelor of Science — Telecommunications Engineering",
+    "period": "Sep 2017 → May 2021",
+    "languages": [
+      {
+        "name": "Vietnamese",
+        "level": "Native",
+        "color": "green"
+      },
+      {
+        "name": "English",
+        "level": "Fluent",
+        "color": "cyan"
+      }
+    ]
+  },
+  "contact": {
+    "terminalUser": "duydanh@backend",
+    "fields": [
+      {
+        "key": "name",
+        "value": "\"Duong Duy Danh\"",
+        "valueColor": "text-terminal-string"
+      },
+      {
+        "key": "role",
+        "value": "\"Backend Engineer — Java & PHP\"",
+        "valueColor": "text-terminal-string"
+      },
+      {
+        "key": "email",
+        "value": "\"duydanh2012.job@gmail.com\"",
+        "valueColor": "text-terminal-string"
+      },
+      {
+        "key": "phone",
+        "value": "\"+84 337 136 172\"",
+        "valueColor": "text-terminal-string"
+      },
+      {
+        "key": "status",
+        "value": "\"open_to_work\"",
+        "valueColor": "text-terminal-accent"
+      }
+    ],
+    "emailLink": "mailto:duydanh2012.job@gmail.com",
+    "phoneLink": "tel:+84337136172",
+    "phoneDisplay": "+84 337 136 172"
+  },
+  "footer": {
+    "text": "Built with ♥ by Duong Duy Danh  ·  Backend Software Engineer"
+  },
+  "pdf": {
+    "files": [
+      {
+        "id": "java",
+        "filename": "DUONG_DUY_DANH_Backend_Java_Spring_Boot_CV.pdf",
+        "label": "Java Spring Boot CV"
+      },
+      {
+        "id": "duong_duy_danh_backend_php_cv",
+        "filename": "DUONG_DUY_DANH_Backend_PHP_CV.pdf",
+        "label": "PHP"
+      }
+    ],
+    "activeId": "java"
+  }
+}

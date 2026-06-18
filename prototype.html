@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duong Duy Danh — Backend Software Engineer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --bg2:       #161b22;
+      --bg3:       #21262d;
+      --green:     #6DB33F;
+      --cyan:      #00d4ff;
+      --text:      #e6edf3;
+      --muted:     #8b949e;
+      --border:    #30363d;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 3rem;
+      background: rgba(13,17,23,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: all .3s;
+    }
+    .nav-logo {
+      font-family: 'Courier New', monospace;
+      font-size: .95rem;
+      color: var(--green);
+    }
+    .nav-logo span { color: var(--cyan); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: .9rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #particle-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: .85rem;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: .25rem .75rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .6s ease both;
+    }
+    .hero-name {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      animation: fadeUp .6s .1s ease both;
+    }
+    .hero-name .accent { color: var(--cyan); }
+    .hero-title {
+      margin-top: .75rem;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      animation: fadeUp .6s .2s ease both;
+    }
+    .hero-title .cursor {
+      display: inline-block;
+      width: 2px; height: 1.1em;
+      background: var(--cyan);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    .hero-stats {
+      display: flex; gap: 3rem; justify-content: center;
+      margin-top: 3rem;
+      animation: fadeUp .6s .4s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 2rem; font-weight: 700;
+      color: var(--cyan);
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-label { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; justify-content: center;
+      animation: fadeUp .6s .5s ease both;
+    }
+    .btn {
+      padding: .65rem 1.75rem;
+      border-radius: .375rem;
+      font-size: .9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--green); color: #fff; font-weight: 600;
+    }
+    .btn-primary:hover { background: #5a9e32; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: var(--muted); font-size: .75rem;
+      animation: fadeIn 1s 1s ease both;
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      animation: scrollBounce 1.5s ease-in-out infinite;
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 6rem 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section-label {
+      font-family: 'Courier New', monospace;
+      font-size: .8rem; color: var(--green);
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; margin-bottom: .5rem;
+    }
+    .section-divider {
+      width: 3rem; height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      border-radius: 2px; margin-bottom: 3rem;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg2); }
+    .skills-desc {
+      color: var(--muted); max-width: 580px; margin-bottom: 3rem; font-size: .95rem;
+    }
+    .skill-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: .75rem;
+      padding: 1.5rem;
+      transition: border-color .3s, transform .3s;
+      cursor: default;
+    }
+    .skill-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-4px);
+    }
+    .skill-card-icon {
+      font-size: 1.5rem; margin-bottom: .75rem;
+    }
+    .skill-card-title {
+      font-size: .85rem; font-weight: 600;
+      color: var(--muted); text-transform: uppercase;
+      letter-spacing: .06em; margin-bottom: 1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tag {
+      font-size: .78rem;
+      padding: .2rem .65rem;
+      border-radius: .25rem;
+      font-family: 'Courier New', monospace;
+      font-weight: 500;
+    }
+    .tag-green  { background: rgba(109,179,63,.12); color: var(--green); border: 1px solid rgba(109,179,63,.3); }
+    .tag-cyan   { background: rgba(0,212,255,.1);   color: var(--cyan);  border: 1px solid rgba(0,212,255,.25); }
+    .tag-orange { background: rgba(255,160,60,.1);  color: #ffa03c;      border: 1px solid rgba(255,160,60,.25); }
+    .tag-purple { background: rgba(180,130,255,.1); color: #b482ff;      border: 1px solid rgba(180,130,255,.25); }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: .5rem; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green), var(--cyan), transparent);
+    }
+    .timeline-item {
+      position: relative; margin-bottom: 3rem;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity .5s, transform .5s;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-dot {
+      position: absolute; left: -2.4rem; top: .4rem;
+      width: 12px; height: 12px;
+      background: var(--bg);
+      border: 2px solid var(--green);
+      border-radius: 50%;
+      transition: background .3s;
+    }
+    .timeline-item:hover .timeline-dot { background: var(--green); }
+    .timeline-header { margin-bottom: .75rem; }
+    .timeline-company {
+      font-size: 1.1rem; font-weight: 700; color: var(--cyan);
+    }
+    .timeline-role { font-size: .9rem; color: var(--text); margin-top: .1rem; }
+    .timeline-period {
+      font-size: .8rem; color: var(--muted);
+      font-family: 'Courier New', monospace;
+      margin-top: .2rem;
+    }
+    .timeline-project {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 0 .5rem .5rem 0;
+      padding: 1rem 1.25rem;
+      margin-top: .75rem;
+    }
+    .timeline-project-name {
+      font-size: .9rem; font-weight: 600; margin-bottom: .5rem;
+    }
+    .timeline-bullets {
+      list-style: none; display: flex; flex-direction: column; gap: .4rem;
+    }
+    .timeline-bullets li {
+      font-size: .85rem; color: var(--muted);
+      padding-left: 1rem; position: relative;
+    }
+    .timeline-bullets li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--green); font-size: .75rem; top: .05rem;
+    }
+    .timeline-bullets li .highlight { color: var(--cyan); font-weight: 600; }
+    .timeline-stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
+
+    /* ── METRICS ── */
+    #metrics { background: var(--bg2); }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .metric-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: .75rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: border-color .3s, transform .3s;
+    }
+    .metric-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+    .metric-num {
+      font-size: 2.5rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .metric-desc { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
+
+    /* ── EDUCATION ── */
+    #education { background: var(--bg); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg2); }
+    .terminal {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: .75rem;
+      overflow: hidden;
+      max-width: 640px;
+    }
+    .terminal-bar {
+      display: flex; align-items: center; gap: .5rem;
+      background: var(--bg3);
+      padding: .75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-dot.red { background: #ff5f57; }
+    .t-dot.yellow { background: #ffbd2e; }
+    .t-dot.green { background: #28c840; }
+    .t-title { font-size: .8rem; color: var(--muted); margin-left: auto; margin-right: auto; }
+    .terminal-body { padding: 1.5rem; font-family: 'Courier New', monospace; font-size: .88rem; }
+    .t-line { margin-bottom: .6rem; }
+    .t-prompt { color: var(--green); }
+    .t-cmd { color: var(--text); }
+    .t-out { color: var(--muted); }
+    .t-key { color: var(--cyan); }
+    .t-val { color: #e3b341; }
+    .t-string { color: #a5d6ff; }
+    .contact-links {
+      display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem;
+      color: var(--muted); font-size: .8rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Courier New', monospace;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; } 50% { opacity: 0; }
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(5px); }
+    }
+
+    /* ── REVEAL ON SCROLL ── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>&lt;</span>DuyDanh<span>/&gt;</span></div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#metrics">Impact</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-tag">⚡ Open to work — Java &amp; PHP Backend</div>
+    <h1 class="hero-name">Duong Duy <span class="accent">Danh</span></h1>
+    <p class="hero-title" id="typewriter"><span class="cursor"></span></p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num" data-target="4">0</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="2">0</div>
+        <div class="stat-label">Backend Stacks</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="1" data-suffix="M+">0</div>
+        <div class="stat-label">Transactions / year</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="10" data-suffix="+">0</div>
+        <div class="stat-label">Integrations Built</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <a href="#experience" class="btn btn-outline">View experience</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label reveal">Core Technical Skills</div>
+    <h2 class="section-title reveal">What I work with</h2>
+    <div class="section-divider reveal"></div>
+    <p class="skills-desc reveal">
+      4+ years building scalable backend systems across Java Spring Boot &amp; PHP (Laravel / Phalcon)
+      — from microservices and event streaming to API design and third-party integrations.
+    </p>
+    <div class="skill-groups">
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🍃</div>
+        <div class="skill-card-title">Java Ecosystem</div>
+        <div class="skill-tags">
+          <span class="tag tag-green">Spring Boot</span>
+          <span class="tag tag-green">Spring MVC</span>
+          <span class="tag tag-green">Spring Data</span>
+          <span class="tag tag-green">Spring Cloud</span>
+          <span class="tag tag-green">Maven</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🐘</div>
+        <div class="skill-card-title">PHP Ecosystem</div>
+        <div class="skill-tags">
+          <span class="tag tag-purple">Laravel</span>
+          <span class="tag tag-purple">Phalcon</span>
+          <span class="tag tag-purple">Blade / Volt</span>
+          <span class="tag tag-purple">Eloquent ORM</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🔗</div>
+        <div class="skill-card-title">API & Integration</div>
+        <div class="skill-tags">
+          <span class="tag tag-cyan">RESTful APIs</span>
+          <span class="tag tag-cyan">Webhooks</span>
+          <span class="tag tag-cyan">OpenAPI</span>
+          <span class="tag tag-cyan">Third-party APIs</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🗄️</div>
+        <div class="skill-card-title">Databases</div>
+        <div class="skill-tags">
+          <span class="tag tag-cyan">Oracle SQL</span>
+          <span class="tag tag-cyan">MySQL</span>
+          <span class="tag tag-cyan">MongoDB</span>
+          <span class="tag tag-cyan">Elasticsearch</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">⚡</div>
+        <div class="skill-card-title">Message Queue & Streaming</div>
+        <div class="skill-tags">
+          <span class="tag tag-orange">Kafka</span>
+          <span class="tag tag-orange">Kafka Cloud</span>
+          <span class="tag tag-orange">Event-driven arch</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🏗️</div>
+        <div class="skill-card-title">Architecture & Design</div>
+        <div class="skill-tags">
+          <span class="tag tag-purple">Microservices</span>
+          <span class="tag tag-purple">Distributed Systems</span>
+          <span class="tag tag-purple">Plugin Architecture</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🖥️</div>
+        <div class="skill-card-title">Frontend</div>
+        <div class="skill-tags">
+          <span class="tag tag-orange">Angular</span>
+          <span class="tag tag-orange">NuxtJS</span>
+          <span class="tag tag-orange">JavaScript</span>
+          <span class="tag tag-orange">jQuery</span>
+          <span class="tag tag-orange">Bootstrap</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🛠️</div>
+        <div class="skill-card-title">DevOps & Tools</div>
+        <div class="skill-tags">
+          <span class="tag tag-green">Docker</span>
+          <span class="tag tag-green">Git</span>
+          <span class="tag tag-green">Cloudflare</span>
+          <span class="tag tag-green">PM2</span>
+          <span class="tag tag-green">Postman</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label reveal">Professional Experience</div>
+    <h2 class="section-title reveal">Where I've worked</h2>
+    <div class="section-divider reveal"></div>
+    <div class="timeline">
+
+      <!-- VNPT -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div class="timeline-company">VNPT</div>
+          <div class="timeline-role">Full-Stack Backend Developer</div>
+          <div class="timeline-period">May 2023 → September 2025</div>
+        </div>
+        <div class="timeline-project">
+          <div class="timeline-project-name">1022 Citizen Feedback Portal <span style="color:var(--muted);font-size:.8rem;font-weight:400">Oct 2024 – Sep 2025</span></div>
+          <ul class="timeline-bullets">
+            <li>Microservice architecture with dossier workflows, state machines & permission-based access control</li>
+            <li>Built clean RESTful API contracts; collaborated on API specs with frontend team</li>
+            <li>Kafka-based event streaming for distributed notification delivery with eventual consistency</li>
+            <li>Elasticsearch indexing on <span class="highlight">1M+ dossier records</span></li>
+            <li>Code reviews & mentoring — reduced production bugs by <span class="highlight">30%</span></li>
+          </ul>
+          <div class="timeline-stack">
+            <span class="tag tag-green">Spring Boot</span>
+            <span class="tag tag-green">Spring Data</span>
+            <span class="tag tag-orange">Kafka</span>
+            <span class="tag tag-cyan">Elasticsearch</span>
+            <span class="tag tag-cyan">Oracle SQL</span>
+            <span class="tag tag-cyan">MongoDB</span>
+            <span class="tag tag-orange">Angular</span>
+          </div>
+        </div>
+        <div class="timeline-project" style="margin-top:.75rem; border-left-color: var(--cyan)">
+          <div class="timeline-project-name">iGate — Public Services Gateway <span style="color:var(--muted);font-size:.8rem;font-weight:400">Jul 2023 – Sep 2025</span></div>
+          <ul class="timeline-bullets">
+            <li>Nation-wide e-government platform with Kafka Cloud inter-service communication</li>
+            <li>Developed complex workflow engines for dossier handling, task routing & permission systems</li>
+            <li>Built APIs with webhooks for external partners; integrated payment &amp; notification services</li>
+            <li>Search latency reduced by <span class="highlight">60%</span> via Elasticsearch indexing optimization</li>
+            <li>API response time improved by <span class="highlight">45%</span> through query &amp; database index optimization</li>
+          </ul>
+          <div class="timeline-stack">
+            <span class="tag tag-green">Spring Boot</span>
+            <span class="tag tag-orange">Kafka Cloud</span>
+            <span class="tag tag-cyan">Elasticsearch</span>
+            <span class="tag tag-cyan">MongoDB</span>
+            <span class="tag tag-cyan">Oracle SQL</span>
+            <span class="tag tag-orange">Angular</span>
+          </div>
+        </div>
+        <div class="timeline-project" style="margin-top:.75rem; border-left-color: var(--muted)">
+          <div class="timeline-project-name">Hospital Information System (HIS) <span style="color:var(--muted);font-size:.8rem;font-weight:400">May 2024 – Jul 2024</span></div>
+          <ul class="timeline-bullets">
+            <li>Clinical workflow optimization &amp; Oracle SQL performance tuning for patient data retrieval</li>
+            <li>JasperReports integration for dynamic medical report generation with complex data aggregation</li>
+          </ul>
+          <div class="timeline-stack">
+            <span class="tag tag-green">Java</span>
+            <span class="tag tag-cyan">Oracle SQL</span>
+            <span class="tag tag-orange">JasperReports</span>
+            <span class="tag tag-orange">Angular</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BIN -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div class="timeline-company">BIN Corporation Group</div>
+          <div class="timeline-role">PHP Developer</div>
+          <div class="timeline-period">Sep 2022 → Mar 2023</div>
+        </div>
+        <div class="timeline-project">
+          <ul class="timeline-bullets">
+            <li>Built RESTful APIs &amp; webhooks for payment processing, notifications &amp; external data sync across <span class="highlight">3+ platforms</span></li>
+            <li>Created reusable modular plugins &amp; backend components for scalability</li>
+            <li>Designed MySQL schemas supporting multi-site content &amp; complex business rules</li>
+          </ul>
+          <div class="timeline-stack">
+            <span class="tag tag-purple">Phalcon</span>
+            <span class="tag tag-cyan">MySQL</span>
+            <span class="tag tag-orange">JavaScript</span>
+            <span class="tag tag-orange">jQuery</span>
+            <span class="tag tag-orange">Bootstrap</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SweetSoft -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div class="timeline-company">SweetSoft Solutions</div>
+          <div class="timeline-role">PHP Developer</div>
+          <div class="timeline-period">Mar 2021 → Jun 2022</div>
+        </div>
+        <div class="timeline-project">
+          <ul class="timeline-bullets">
+            <li>Designed custom plugins extending website functionality with maintainability &amp; scalability</li>
+            <li>Tailored UI &amp; database layouts to client-specific requirements</li>
+            <li>Architected MySQL schemas with data normalization &amp; optimization</li>
+            <li>Agile delivery — high-quality code within tight deadlines</li>
+          </ul>
+          <div class="timeline-stack">
+            <span class="tag tag-purple">Laravel</span>
+            <span class="tag tag-cyan">MySQL</span>
+            <span class="tag tag-orange">JavaScript</span>
+            <span class="tag tag-orange">jQuery</span>
+            <span class="tag tag-orange">Bootstrap</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Freelance -->
+      <div class="timeline-item">
+        <div class="timeline-dot" style="border-color:var(--cyan)"></div>
+        <div class="timeline-header">
+          <div class="timeline-company" style="color:var(--green)">Freelance</div>
+          <div class="timeline-role">Cloudflare &amp; Frontend Developer</div>
+          <div class="timeline-period">Oct 2025 → Present</div>
+        </div>
+        <div class="timeline-project" style="border-left-color:var(--cyan)">
+          <ul class="timeline-bullets">
+            <li>Deploy &amp; optimize NuxtJS apps on Cloudflare; configure SSL, cache rules, WAF &amp; rate limiting</li>
+            <li>Performance-first development with SEO optimization &amp; high-performance edge logic</li>
+          </ul>
+          <div class="timeline-stack">
+            <span class="tag tag-orange">NuxtJS</span>
+            <span class="tag tag-green">Cloudflare</span>
+            <span class="tag tag-cyan">MySQL</span>
+            <span class="tag tag-orange">PM2</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section id="metrics">
+  <div class="container">
+    <div class="section-label reveal">Impact & Metrics</div>
+    <h2 class="section-title reveal">Numbers that matter</h2>
+    <div class="section-divider reveal"></div>
+    <div class="metrics-grid">
+      <div class="metric-card reveal">
+        <div class="metric-num">4+</div>
+        <div class="metric-desc">Years across Java Spring Boot &amp; PHP Laravel / Phalcon</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-num">1M+</div>
+        <div class="metric-desc">Transactions processed annually on e-gov platform</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-num">10+</div>
+        <div class="metric-desc">Third-party services integrated (payment, notification, CRM)</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-num">60%</div>
+        <div class="metric-desc">Reduction in search latency via Elasticsearch tuning</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-num">45%</div>
+        <div class="metric-desc">API response time improvement through query optimization</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-num">30%</div>
+        <div class="metric-desc">Fewer production bugs after mentoring &amp; code reviews</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-label reveal">Education</div>
+    <h2 class="section-title reveal">Academic background</h2>
+    <div class="section-divider reveal"></div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot" style="border-color:var(--cyan)"></div>
+        <div class="timeline-header">
+          <div class="timeline-company">Telecommunications University</div>
+          <div class="timeline-role">Bachelor of Science — Telecommunications Engineering</div>
+          <div class="timeline-period">Sep 2017 → May 2021</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2rem">
+      <div class="skill-card reveal" style="max-width:480px">
+        <div class="skill-card-title">Languages</div>
+        <div class="skill-tags">
+          <span class="tag tag-green">Vietnamese — Native</span>
+          <span class="tag tag-cyan">English — Fluent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label reveal">Contact</div>
+    <h2 class="section-title reveal">Let's connect</h2>
+    <div class="section-divider reveal"></div>
+    <div class="terminal reveal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div>
+        <div class="t-dot yellow"></div>
+        <div class="t-dot green"></div>
+        <div class="t-title">bash — contact.sh</div>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line">
+          <span class="t-prompt">duydanh@backend:~$ </span>
+          <span class="t-cmd">curl -X GET /api/contact</span>
+        </div>
+        <div class="t-line" style="margin-top:.5rem">
+          <span class="t-out">{</span>
+        </div>
+        <div class="t-line" style="padding-left:1.5rem">
+          <span class="t-key">"name"</span><span class="t-out">: </span>
+          <span class="t-string">"Duong Duy Danh"</span><span class="t-out">,</span>
+        </div>
+        <div class="t-line" style="padding-left:1.5rem">
+          <span class="t-key">"role"</span><span class="t-out">: </span>
+          <span class="t-string">"Backend Engineer — Java &amp; PHP"</span><span class="t-out">,</span>
+        </div>
+        <div class="t-line" style="padding-left:1.5rem">
+          <span class="t-key">"email"</span><span class="t-out">: </span>
+          <span class="t-string">"duydanh2012.job@gmail.com"</span><span class="t-out">,</span>
+        </div>
+        <div class="t-line" style="padding-left:1.5rem">
+          <span class="t-key">"phone"</span><span class="t-out">: </span>
+          <span class="t-string">"+84 337 136 172"</span><span class="t-out">,</span>
+        </div>
+        <div class="t-line" style="padding-left:1.5rem">
+          <span class="t-key">"status"</span><span class="t-out">: </span>
+          <span class="t-val">"open_to_work"</span>
+        </div>
+        <div class="t-line">
+          <span class="t-out">}</span>
+        </div>
+        <div class="t-line" style="margin-top:.75rem">
+          <span class="t-prompt">duydanh@backend:~$ </span>
+          <span class="cursor" style="display:inline-block;width:8px;height:1em;background:var(--green);vertical-align:text-bottom;animation:blink 1s step-end infinite"></span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:duydanh2012.job@gmail.com" class="btn btn-primary">✉ Send Email</a>
+      <a href="tel:+84337136172" class="btn btn-outline">📞 +84 337 136 172</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with ♥ by Duong Duy Danh &nbsp;·&nbsp; Backend Engineer</p>
+</footer>
+
+<script>
+  /* ── PARTICLE NETWORK ── */
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - .5) * .4;
+      this.vy = (Math.random() - .5) * .4;
+      this.r = Math.random() * 2 + 1;
+      this.alpha = Math.random() * .5 + .2;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,212,255,${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    particles = [];
+    const count = Math.floor((W * H) / 12000);
+    for (let i = 0; i < count; i++) particles.push(new Particle());
+  }
+
+  function drawLines() {
+    const maxDist = 130;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < maxDist) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          const alpha = (1 - dist / maxDist) * .15;
+          ctx.strokeStyle = `rgba(109,179,63,${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawLines();
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+  resize(); initParticles(); animate();
+
+  /* ── TYPEWRITER ── */
+  const lines = [
+    'Backend Software Engineer',
+    'Java Spring Boot · PHP Laravel',
+    'Microservices & Distributed Systems',
+    'API Architect & System Designer',
+  ];
+  let li = 0, ci = 0, deleting = false;
+  const tw = document.getElementById('typewriter');
+
+  function type() {
+    const line = lines[li];
+    if (!deleting) {
+      ci++;
+      tw.innerHTML = line.slice(0, ci) + '<span class="cursor"></span>';
+      if (ci === line.length) { deleting = true; setTimeout(type, 2000); return; }
+      setTimeout(type, 60);
+    } else {
+      ci--;
+      tw.innerHTML = line.slice(0, ci) + '<span class="cursor"></span>';
+      if (ci === 0) { deleting = false; li = (li + 1) % lines.length; setTimeout(type, 400); return; }
+      setTimeout(type, 35);
+    }
+  }
+  setTimeout(type, 800);
+
+  /* ── COUNTER ANIMATION ── */
+  function animateCounter(el) {
+    const target = +el.dataset.target;
+    const suffix = el.dataset.suffix || '+';
+    let start = 0;
+    const step = target / 50;
+    const timer = setInterval(() => {
+      start = Math.min(start + step, target);
+      el.textContent = Math.floor(start) + suffix;
+      if (start >= target) clearInterval(timer);
+    }, 30);
+  }
+
+  const counters = document.querySelectorAll('.stat-num[data-target]');
+  let countersStarted = false;
+  const heroObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !countersStarted) {
+      countersStarted = true;
+      setTimeout(() => counters.forEach(animateCounter), 600);
+    }
+  });
+  heroObserver.observe(document.getElementById('hero'));
+
+  /* ── SCROLL REVEAL ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .timeline-item').forEach(el => {
+    revealObserver.observe(el);
+  });
+</script>
+</body>
+</html>
