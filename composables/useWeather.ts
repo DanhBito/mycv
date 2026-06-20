@@ -18,19 +18,28 @@ function mapCondition(condition: string): WeatherCondition {
   return 'clear'
 }
 
+const AUTO_REFRESH_INTERVAL =60 * 1000
+
 export function useWeather() {
   const weather = ref<WeatherData | null>(null)
   const weatherCondition = ref<WeatherCondition>('clear')
-  const loading = ref(true)
+  const loading = ref(false)
   const error = ref(false)
 
+  let lastLat: number | null = null
+  let lastLon: number | null = null
+  let refreshTimer: ReturnType<typeof setInterval> | null = null
+
   async function fetchWeather(lat: number, lon: number) {
+    lastLat = lat
+    lastLon = lon
     try {
       const data = await $fetch<WeatherData>('/api/weather', {
         params: { lat, lon },
       })
       weather.value = data
       weatherCondition.value = mapCondition(data.condition)
+      error.value = false
     } catch {
       error.value = true
     } finally {
@@ -39,10 +48,13 @@ export function useWeather() {
   }
 
   async function fetchWeatherByIp() {
+    lastLat = null
+    lastLon = null
     try {
       const data = await $fetch<WeatherData>('/api/weather')
       weather.value = data
       weatherCondition.value = mapCondition(data.condition)
+      error.value = false
     } catch {
       error.value = true
     } finally {
@@ -50,20 +62,46 @@ export function useWeather() {
     }
   }
 
+  function refresh() {
+    if (lastLat !== null && lastLon !== null) {
+      fetchWeather(lastLat, lastLon)
+    } else {
+      fetchWeatherByIp()
+    }
+  }
+
+  function startAutoRefresh() {
+    refreshTimer = setInterval(refresh, AUTO_REFRESH_INTERVAL)
+  }
+
   function init() {
     if (!navigator.geolocation) {
       fetchWeatherByIp()
+      startAutoRefresh()
       return
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => fetchWeather(pos.coords.latitude, pos.coords.longitude),
-      () => fetchWeatherByIp(),
+      (pos) => {
+        fetchWeather(pos.coords.latitude, pos.coords.longitude)
+        startAutoRefresh()
+      },
+      () => {
+        fetchWeatherByIp()
+        startAutoRefresh()
+      },
       { timeout: 5000 }
     )
   }
 
   onMounted(init)
+
+  onUnmounted(() => {
+    if (refreshTimer) {
+      clearInterval(refreshTimer)
+      refreshTimer = null
+    }
+  })
 
   return { weather, weatherCondition, loading, error }
 }

@@ -78,7 +78,7 @@
       </template>
 
       <!-- Temperature overlay -->
-      <span class="wp-temp">{{ weather?.temp }}°</span>
+      <span v-if="weather" class="wp-temp">{{ weather.temp }}°</span>
     </div>
 
     <!-- Tooltip -->
