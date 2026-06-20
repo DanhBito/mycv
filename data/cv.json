@@ -4,7 +4,9 @@
     "description": "Backend Software Engineer with 4+ years across Java Spring Boot & PHP Laravel/Phalcon. Specialized in microservices, distributed systems, and API design.",
     "author": "Duong Duy Danh",
     "ogTitle": "Duong Duy Danh — Backend Software Engineer",
-    "ogDescription": "Backend Engineer specialized in Java Spring Boot & PHP Laravel. 4+ years building scalable systems for e-government platforms."
+    "ogDescription": "Backend Engineer specialized in Java Spring Boot & PHP Laravel. 4+ years building scalable systems for e-government platforms.",
+    "ogImage": "/og-image.png",
+    "ogUrl": "https://duydanh.dev"
   },
   "nav": {
     "brandName": "DuyDanh",

@@ -1,8 +1,8 @@
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-bg/85 backdrop-blur-xl border-b border-border transition-all duration-300">
-    <div class="font-mono text-xl text-spring">
+    <a href="#" class="font-mono text-xl text-spring hover:text-spring cursor-pointer transition-colors duration-200" @click.prevent="scrollToTop">
       <span class="text-cyan">&lt;</span>{{ data.brandName }}<span class="text-cyan">/&gt;</span>
-    </div>
+    </a>
 
     <div class="flex items-center gap-2 md:hidden">
       <WeatherWidget />
@@ -94,6 +94,10 @@ import type { Nav } from '~/types/cv'
 defineProps<{ data: Nav }>()
 const mobileOpen = ref(false)
 const { isDark, toggle } = useTheme()
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 </script>
 
 <style scoped>

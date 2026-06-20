@@ -2,7 +2,7 @@
   <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
     <canvas ref="canvasRef" class="absolute inset-0 w-full h-full" />
 
-    <div class="relative z-10 text-center px-4">
+    <div class="relative z-10 text-center px-4 pt-16 md:pt-0">
       <div class="inline-block font-mono text-xs text-spring border border-spring px-3 py-1 rounded-full mb-6 animate-fade-up">
         {{ data.statusBadge }}
       </div>

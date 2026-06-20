@@ -61,6 +61,8 @@ export interface SeoConfig {
   author: string
   ogTitle: string
   ogDescription: string
+  ogImage: string
+  ogUrl: string
 }
 
 export interface CvData {

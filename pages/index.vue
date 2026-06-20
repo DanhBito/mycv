@@ -8,6 +8,7 @@
     <EducationSection :data="data.education" />
     <ContactSection :data="data.contact" />
     <TheFooter :data="data.footer" />
+    <ScrollToTop />
   </div>
 </template>
 
@@ -19,13 +20,26 @@ const { data } = await useFetch<CvData>('/api/cv')
 useScrollReveal()
 
 if (data.value?.seo) {
+  const seo = data.value.seo
+  const ogImageUrl = seo.ogUrl
+    ? `${seo.ogUrl}${seo.ogImage}`
+    : seo.ogImage
+
   useHead({
-    title: data.value.seo.title,
+    title: seo.title,
     meta: [
-      { name: 'description', content: data.value.seo.description },
-      { name: 'author', content: data.value.seo.author },
-      { property: 'og:title', content: data.value.seo.ogTitle },
-      { property: 'og:description', content: data.value.seo.ogDescription },
+      { name: 'description', content: seo.description },
+      { name: 'author', content: seo.author },
+      { property: 'og:title', content: seo.ogTitle },
+      { property: 'og:description', content: seo.ogDescription },
+      { property: 'og:image', content: ogImageUrl },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
+      { property: 'og:url', content: seo.ogUrl },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: seo.ogTitle },
+      { name: 'twitter:description', content: seo.ogDescription },
+      { name: 'twitter:image', content: ogImageUrl },
     ],
   })
 }
