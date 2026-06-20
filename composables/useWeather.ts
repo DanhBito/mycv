@@ -18,7 +18,7 @@ function mapCondition(condition: string): WeatherCondition {
   return 'clear'
 }
 
-const AUTO_REFRESH_INTERVAL = 60 *60 * 1000 
+const AUTO_REFRESH_INTERVAL = 60 *60 * 1000
 
 export function useWeather() {
   const weather = ref<WeatherData | null>(null)
