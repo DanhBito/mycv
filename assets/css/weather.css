@@ -10,453 +10,47 @@
   animation: wp-enter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ---- Pill container ---- */
-.weather-pill {
-  position: relative;
-  width: 96px;
-  height: 38px;
-  border-radius: 12px;
-  overflow: hidden;
+.weather-inner {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding-right: 10px;
-  transition: box-shadow 0.3s;
-}
-
-.weather-pill:hover {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 /* Temperature text */
 .wp-temp {
-  position: relative;
-  z-index: 10;
-  font-size: 13px;
+  padding: 0 8px;
+  border-right: 1px solid rgb(var(--color-border));
+  font-size: 11px;
   font-weight: 700;
   font-family: ui-monospace, monospace;
   letter-spacing: -0.5px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* ============================= */
-/* ===== CLEAR / SUNNY ========= */
-/* ============================= */
-.weather-pill.clear {
-  background: linear-gradient(135deg, #f59e0b, #f97316, #ef4444);
-}
-
-.weather-pill.clear .wp-temp {
-  color: #fff;
-}
-
-/* Sun body */
-.wp-sun {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 26px;
-  height: 26px;
-}
-
-.wp-sun-core {
-  position: absolute;
-  inset: 5px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fef3c7, #fbbf24 50%, #f59e0b);
-  box-shadow: 0 0 10px #fbbf24, 0 0 20px rgba(251, 191, 36, 0.5);
-}
-
-@keyframes wp-ring-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.3); opacity: 0; }
-}
-
-.wp-sun-ring {
-  position: absolute;
-  inset: 2px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(254, 243, 199, 0.5);
-  animation: wp-ring-pulse 2.5s ease-in-out infinite;
-}
-
-.wp-sun-ring-2 {
-  animation-delay: 1.25s;
-}
-
-/* Sun rays */
-@keyframes wp-ray-move {
-  0% { transform: translateX(0) scaleX(1); opacity: 0.7; }
-  50% { transform: translateX(4px) scaleX(1.3); opacity: 0.3; }
-  100% { transform: translateX(0) scaleX(1); opacity: 0.7; }
-}
-
-.wp-ray {
-  position: absolute;
-  left: 28px;
-  height: 2px;
-  border-radius: 1px;
-  background: linear-gradient(90deg, rgba(254, 243, 199, 0.8), transparent);
-  animation: wp-ray-move 3s ease-in-out infinite;
-}
-
-.wp-ray-1 { top: 10px; width: 28px; animation-delay: 0s; }
-.wp-ray-2 { top: 16px; width: 35px; animation-delay: 0.4s; opacity: 0.9; }
-.wp-ray-3 { top: 22px; width: 30px; animation-delay: 0.8s; }
-.wp-ray-4 { top: 28px; width: 22px; animation-delay: 1.2s; opacity: 0.6; }
-.wp-ray-5 { top: 6px; width: 18px; animation-delay: 0.6s; opacity: 0.5; }
-
-/* Sparkles */
-@keyframes wp-sparkle {
-  0%, 100% { opacity: 0; transform: scale(0); }
-  50% { opacity: 1; transform: scale(1); }
-}
-
-.wp-sparkle {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: #fef3c7;
-  border-radius: 50%;
-  animation: wp-sparkle 2s ease-in-out infinite;
-}
-
-.wp-sparkle-1 { top: 8px; left: 55px; animation-delay: 0s; }
-.wp-sparkle-2 { top: 24px; left: 65px; animation-delay: 0.7s; }
-.wp-sparkle-3 { top: 14px; left: 75px; animation-delay: 1.4s; }
-
-/* ============================= */
-/* ===== CLOUDS ================ */
-/* ============================= */
-.weather-pill.clouds {
-  background: linear-gradient(135deg, #64748b, #94a3b8);
-}
-
-.dark .weather-pill.clouds {
-  background: linear-gradient(135deg, #475569, #64748b);
-}
-
-.weather-pill.clouds .wp-temp {
-  color: #fff;
-}
-
-@keyframes wp-cloud-float {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(6px); }
-}
-
-@keyframes wp-cloud-float-rev {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(-4px); }
-}
-
-.wp-cloud {
-  position: absolute;
-  border-radius: 50px;
-}
-
-.wp-cloud-bg {
-  width: 40px;
-  height: 14px;
-  background: rgba(255, 255, 255, 0.15);
-  top: 4px;
-  left: -5px;
-  animation: wp-cloud-float-rev 8s ease-in-out infinite;
-}
-
-.wp-cloud-md {
-  width: 50px;
-  height: 16px;
-  background: rgba(255, 255, 255, 0.25);
-  top: 10px;
-  left: 10px;
-  animation: wp-cloud-float 6s ease-in-out infinite;
-}
-
-.wp-cloud-fg {
-  width: 44px;
-  height: 15px;
-  background: rgba(255, 255, 255, 0.35);
-  top: 18px;
-  left: -2px;
-  animation: wp-cloud-float 5s ease-in-out 0.5s infinite;
-}
-
-.wp-cloud-sm {
-  width: 30px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  top: 26px;
-  left: 22px;
-  animation: wp-cloud-float-rev 7s ease-in-out 1s infinite;
-}
-
-/* ============================= */
-/* ===== RAIN ================== */
-/* ============================= */
-.weather-pill.rain,
-.weather-pill.drizzle {
-  background: linear-gradient(180deg, #334155, #1e293b);
-}
-
-.dark .weather-pill.rain,
-.dark .weather-pill.drizzle {
-  background: linear-gradient(180deg, #1e293b, #0f172a);
-}
-
-.weather-pill.rain .wp-temp,
-.weather-pill.drizzle .wp-temp {
-  color: #7dd3fc;
-}
-
-.wp-rain-cloud {
-  width: 60px;
-  height: 14px;
-  background: rgba(148, 163, 184, 0.5);
-  top: -2px;
-  left: 5px;
-  animation: wp-cloud-float 5s ease-in-out infinite;
-}
-
-.wp-rain-cloud-2 {
-  width: 45px;
-  height: 12px;
-  background: rgba(148, 163, 184, 0.35);
-  top: 3px;
-  left: 30px;
-  animation: wp-cloud-float-rev 6s ease-in-out infinite;
-}
-
-@keyframes wp-rain-fall {
-  0% { transform: translateY(-4px) translateX(0); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateY(38px) translateX(-3px); opacity: 0; }
-}
-
-.wp-drop {
-  position: absolute;
-  width: 1.5px;
-  height: 8px;
-  border-radius: 1px;
-  background: linear-gradient(180deg, transparent, #7dd3fc);
-  animation: wp-rain-fall 0.8s linear infinite;
-}
-
-.wp-drop-1 { left: 12px; top: 10px; animation-delay: 0s; height: 10px; }
-.wp-drop-2 { left: 22px; top: 8px; animation-delay: 0.15s; height: 8px; }
-.wp-drop-3 { left: 32px; top: 10px; animation-delay: 0.3s; height: 11px; }
-.wp-drop-4 { left: 42px; top: 6px; animation-delay: 0.1s; height: 7px; }
-.wp-drop-5 { left: 52px; top: 9px; animation-delay: 0.45s; height: 9px; }
-.wp-drop-6 { left: 17px; top: 12px; animation-delay: 0.5s; height: 6px; opacity: 0.6; }
-.wp-drop-7 { left: 37px; top: 11px; animation-delay: 0.6s; height: 7px; opacity: 0.5; }
-.wp-drop-8 { left: 60px; top: 8px; animation-delay: 0.25s; height: 8px; opacity: 0.4; }
-
-/* Ripples at bottom */
-@keyframes wp-ripple {
-  0% { transform: scaleX(0); opacity: 0.8; }
-  100% { transform: scaleX(1); opacity: 0; }
-}
-
-.wp-ripple {
-  position: absolute;
-  bottom: 3px;
-  width: 10px;
-  height: 2px;
-  border-radius: 50%;
-  border: 1px solid rgba(125, 211, 252, 0.4);
-  background: transparent;
-  animation: wp-ripple 1.2s ease-out infinite;
-}
-
-.wp-ripple-1 { left: 18px; animation-delay: 0.3s; }
-.wp-ripple-2 { left: 45px; animation-delay: 0.8s; }
-
-/* ============================= */
-/* ===== THUNDERSTORM ========== */
-/* ============================= */
-.weather-pill.thunderstorm {
-  background: linear-gradient(180deg, #1e1b2e, #0f0d1a);
-}
-
-.weather-pill.thunderstorm .wp-temp {
-  color: #fbbf24;
-}
-
-.wp-storm-cloud {
-  width: 65px;
-  height: 16px;
-  background: rgba(100, 100, 120, 0.6);
-  top: -3px;
-  left: 2px;
-  animation: wp-cloud-float 4s ease-in-out infinite;
-}
-
-.wp-storm-cloud-2 {
-  width: 50px;
-  height: 13px;
-  background: rgba(80, 80, 100, 0.5);
-  top: 2px;
-  left: 30px;
-  animation: wp-cloud-float-rev 5s ease-in-out infinite;
-}
-
-/* Lightning bolts */
-@keyframes wp-bolt-strike {
-  0%, 100% { opacity: 0; }
-  5% { opacity: 1; }
-  8% { opacity: 0; }
-  10% { opacity: 0.8; }
-  13% { opacity: 0; }
-}
-
-.wp-bolt {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 3px solid transparent;
-  border-right: 3px solid transparent;
-  border-top: 14px solid #fbbf24;
-  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.8));
-  animation: wp-bolt-strike 3s ease-in-out infinite;
-}
-
-.wp-bolt::after {
-  content: '';
-  position: absolute;
-  top: -7px;
-  left: -1px;
-  width: 0;
-  height: 0;
-  border-left: 2px solid transparent;
-  border-right: 2px solid transparent;
-  border-top: 10px solid #fbbf24;
-  transform: rotate(15deg);
-}
-
-.wp-bolt-1 { top: 12px; left: 22px; animation-delay: 0s; }
-.wp-bolt-2 { top: 10px; left: 42px; animation-delay: 1.5s; transform: scale(0.7); }
-
-/* Full flash overlay */
-@keyframes wp-flash {
-  0%, 100% { opacity: 0; }
-  5% { opacity: 0.15; }
-  7% { opacity: 0; }
-  9% { opacity: 0.1; }
-  11% { opacity: 0; }
-}
-
-.wp-storm-flash {
-  position: absolute;
-  inset: 0;
-  background: white;
-  border-radius: inherit;
-  animation: wp-flash 3s ease-in-out infinite;
-  pointer-events: none;
-}
-
-/* ============================= */
-/* ===== SNOW ================== */
-/* ============================= */
-.weather-pill.snow {
-  background: linear-gradient(180deg, #94a3b8, #cbd5e1);
-}
-
-.dark .weather-pill.snow {
-  background: linear-gradient(180deg, #475569, #64748b);
-}
-
-.weather-pill.snow .wp-temp {
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-.wp-snow-cloud {
-  width: 55px;
-  height: 14px;
-  background: rgba(255, 255, 255, 0.4);
-  top: -2px;
-  left: 5px;
-  animation: wp-cloud-float 6s ease-in-out infinite;
-}
-
-.wp-snow-cloud-2 {
-  width: 40px;
-  height: 11px;
-  background: rgba(255, 255, 255, 0.3);
-  top: 3px;
-  left: 35px;
-  animation: wp-cloud-float-rev 7s ease-in-out infinite;
-}
-
-@keyframes wp-snow-drift {
-  0% { transform: translateY(-4px) translateX(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateY(36px) translateX(8px) rotate(180deg); opacity: 0; }
-}
-
-@keyframes wp-snow-drift-alt {
-  0% { transform: translateY(-4px) translateX(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.8; }
-  100% { transform: translateY(32px) translateX(-6px) rotate(-120deg); opacity: 0; }
-}
-
-.wp-flake {
-  position: absolute;
-  font-size: 7px;
-  color: white;
+  color: rgb(var(--color-text));
   line-height: 1;
-  animation: wp-snow-drift 3s linear infinite;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
 }
 
-.wp-flake-1 { left: 10px; top: 8px; animation-delay: 0s; font-size: 8px; }
-.wp-flake-2 { left: 25px; top: 6px; animation-delay: 0.6s; }
-.wp-flake-3 { left: 40px; top: 10px; animation-delay: 1.2s; font-size: 6px; }
-.wp-flake-4 { left: 55px; top: 7px; animation-delay: 0.3s; animation-name: wp-snow-drift-alt; }
-.wp-flake-5 { left: 18px; top: 12px; animation-delay: 1.8s; font-size: 6px; animation-name: wp-snow-drift-alt; }
-.wp-flake-6 { left: 48px; top: 10px; animation-delay: 0.9s; font-size: 5px; }
-.wp-flake-7 { left: 33px; top: 14px; animation-delay: 2.1s; font-size: 4px; }
-
-/* ============================= */
-/* ===== MIST ================== */
-/* ============================= */
-.weather-pill.mist {
-  background: linear-gradient(135deg, #94a3b8, #b0bec5);
+/* ---- Pill container ---- */
+.weather-pill {
+  width: 55px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
 }
 
-.dark .weather-pill.mist {
-  background: linear-gradient(135deg, #475569, #546e7a);
+/* Weather GIF */
+.wp-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.weather-pill.mist .wp-temp {
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-@keyframes wp-mist-drift {
-  0% { transform: translateX(-20px); opacity: 0; }
-  30% { opacity: 0.5; }
-  70% { opacity: 0.5; }
-  100% { transform: translateX(100px); opacity: 0; }
-}
-
-.wp-mist {
-  position: absolute;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.35);
-  animation: wp-mist-drift 6s linear infinite;
-}
-
-.wp-mist-1 { top: 8px; width: 35px; animation-delay: 0s; }
-.wp-mist-2 { top: 15px; width: 45px; animation-delay: 1.2s; background: rgba(255, 255, 255, 0.25); }
-.wp-mist-3 { top: 22px; width: 30px; animation-delay: 2.5s; }
-.wp-mist-4 { top: 29px; width: 40px; animation-delay: 3.8s; background: rgba(255, 255, 255, 0.2); }
-.wp-mist-5 { top: 12px; width: 25px; animation-delay: 4.5s; background: rgba(255, 255, 255, 0.3); }
-
-/* ============================= */
-/* ===== TOOLTIP =============== */
-/* ============================= */
+/* ===== TOOLTIP ===== */
 .weather-tooltip {
   position: absolute;
   top: 100%;
@@ -464,8 +58,8 @@
   margin-top: 8px;
   padding: 6px 12px;
   border-radius: 8px;
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-bg-secondary));
+  border: 1px solid rgb(var(--color-border));
   font-size: 11px;
   white-space: nowrap;
   opacity: 0;

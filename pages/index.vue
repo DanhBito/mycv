@@ -18,6 +18,7 @@ import type { CvData } from '~/types/cv'
 const { data } = await useFetch<CvData>('/api/cv')
 
 useScrollReveal()
+useScrollSnap()
 
 if (data.value?.seo) {
   const seo = data.value.seo

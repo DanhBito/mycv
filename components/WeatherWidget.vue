@@ -1,84 +1,10 @@
 <template>
-  <div v-if="!loading && !error" class="weather-widget relative group cursor-default">
-    <div class="weather-pill" :class="weatherCondition">
-      <!-- Sunny -->
-      <template v-if="weatherCondition === 'clear'">
-        <div class="wp-sun">
-          <div class="wp-sun-core" />
-          <div class="wp-sun-ring" />
-          <div class="wp-sun-ring wp-sun-ring-2" />
-        </div>
-        <div class="wp-ray wp-ray-1" />
-        <div class="wp-ray wp-ray-2" />
-        <div class="wp-ray wp-ray-3" />
-        <div class="wp-ray wp-ray-4" />
-        <div class="wp-ray wp-ray-5" />
-        <div class="wp-sparkle wp-sparkle-1" />
-        <div class="wp-sparkle wp-sparkle-2" />
-        <div class="wp-sparkle wp-sparkle-3" />
-      </template>
-
-      <!-- Clouds -->
-      <template v-else-if="weatherCondition === 'clouds'">
-        <div class="wp-cloud wp-cloud-bg" />
-        <div class="wp-cloud wp-cloud-md" />
-        <div class="wp-cloud wp-cloud-fg" />
-        <div class="wp-cloud wp-cloud-sm" />
-      </template>
-
-      <!-- Rain -->
-      <template v-else-if="weatherCondition === 'rain' || weatherCondition === 'drizzle'">
-        <div class="wp-cloud wp-rain-cloud" />
-        <div class="wp-cloud wp-rain-cloud-2" />
-        <div class="wp-drop wp-drop-1" />
-        <div class="wp-drop wp-drop-2" />
-        <div class="wp-drop wp-drop-3" />
-        <div class="wp-drop wp-drop-4" />
-        <div class="wp-drop wp-drop-5" />
-        <div class="wp-drop wp-drop-6" />
-        <div class="wp-drop wp-drop-7" />
-        <div class="wp-drop wp-drop-8" />
-        <div class="wp-ripple wp-ripple-1" />
-        <div class="wp-ripple wp-ripple-2" />
-      </template>
-
-      <!-- Thunderstorm -->
-      <template v-else-if="weatherCondition === 'thunderstorm'">
-        <div class="wp-cloud wp-storm-cloud" />
-        <div class="wp-cloud wp-storm-cloud-2" />
-        <div class="wp-bolt wp-bolt-1" />
-        <div class="wp-bolt wp-bolt-2" />
-        <div class="wp-drop wp-drop-1" />
-        <div class="wp-drop wp-drop-3" />
-        <div class="wp-drop wp-drop-5" />
-        <div class="wp-drop wp-drop-7" />
-        <div class="wp-storm-flash" />
-      </template>
-
-      <!-- Snow -->
-      <template v-else-if="weatherCondition === 'snow'">
-        <div class="wp-cloud wp-snow-cloud" />
-        <div class="wp-cloud wp-snow-cloud-2" />
-        <div class="wp-flake wp-flake-1">❄</div>
-        <div class="wp-flake wp-flake-2">❄</div>
-        <div class="wp-flake wp-flake-3">❄</div>
-        <div class="wp-flake wp-flake-4">❄</div>
-        <div class="wp-flake wp-flake-5">❄</div>
-        <div class="wp-flake wp-flake-6">•</div>
-        <div class="wp-flake wp-flake-7">•</div>
-      </template>
-
-      <!-- Mist -->
-      <template v-else-if="weatherCondition === 'mist'">
-        <div class="wp-mist wp-mist-1" />
-        <div class="wp-mist wp-mist-2" />
-        <div class="wp-mist wp-mist-3" />
-        <div class="wp-mist wp-mist-4" />
-        <div class="wp-mist wp-mist-5" />
-      </template>
-
-      <!-- Temperature overlay -->
-      <span v-if="weather" class="wp-temp">{{ weather.temp }}°</span>
+  <div v-if="!loading" class="weather-widget relative group cursor-default">
+    <div class="weather-inner">
+      <span class="wp-temp">{{ error ? '--' : `${displayTemp}` }}°</span>
+      <div class="weather-pill">
+        <img :src="weatherGif" :alt="weatherCondition" class="wp-gif" />
+      </div>
     </div>
 
     <!-- Tooltip -->
@@ -90,10 +16,49 @@
         <span class="weather-tooltip-sep">·</span>
         <span class="weather-tooltip-city">{{ weather.city }}</span>
       </template>
+      <span v-else>Weather unavailable</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const { weather, weatherCondition, loading, error } = useWeather()
+
+const gifMap: Record<string, string> = {
+  clear: '/weather/sun.gif',
+  clouds: '/weather/cloudy.gif',
+  rain: '/weather/rain.gif',
+  drizzle: '/weather/rain.gif',
+  thunderstorm: '/weather/storm.gif',
+  snow: '/weather/snow.gif',
+  mist: '/weather/mist.gif',
+}
+
+const weatherGif = computed(() => gifMap[weatherCondition.value] || '/weather/sun.gif')
+
+const displayTemp = ref(0)
+let animFrame: number | null = null
+
+watch(() => weather.value?.temp, (target) => {
+  if (target == null) return
+  if (animFrame) cancelAnimationFrame(animFrame)
+
+  const start = displayTemp.value
+  const diff = target - start
+  const duration = 800
+  const startTime = performance.now()
+
+  function step(now: number) {
+    const elapsed = now - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const ease = 1 - Math.pow(1 - progress, 3)
+    displayTemp.value = Math.round(start + diff * ease)
+
+    if (progress < 1) {
+      animFrame = requestAnimationFrame(step)
+    }
+  }
+
+  animFrame = requestAnimationFrame(step)
+})
 </script>
